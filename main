@@ -1,0 +1,56 @@
+from flask import Flask
+from data import db_session
+from data.users import User
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+def main():
+    db_session.global_init("db/blogs.db")
+    user = User()
+    user.surname = "Scott"
+    user.name = 'Ridley'
+    user.age = 21
+    user.position = 'captain'
+    user.speciality = 'research engineer'
+    user.address = 'module_1'
+    user.email = 'scott_chief@mars.org'
+
+    user1 = User()
+    user1.surname = "John"
+    user1.name = 'Cina'
+    user1.age = 33
+    user1.position = 'the best'
+    user1.speciality = 'restler'
+    user1.address = 'box'
+    user1.email = 'joooooooohnciiiiinaaaa@mars.org'
+
+    user2 = User()
+    user2.surname = "Jeff"
+    user2.name = 'Caplan'
+    user2.age = 35
+    user2.position = 'director'
+    user2.speciality = 'designer'
+    user2.address = 'overwatch'
+    user2.email = 'jeff_the_best@mars.org'
+
+    user3 = User()
+    user3.surname = "SCP"
+    user3.name = '049'
+    user3.age = 100
+    user3.position = 'scp foundation'
+    user3.speciality = 'doctor'
+    user3.address = 'jail'
+    user3.email = 'alive@mars.org'
+    db_sess = db_session.create_session()
+    db_sess.add(user)
+    db_sess.add(user1)
+    db_sess.add(user2)
+    db_sess.add(user3)
+    db_sess.commit()
+    # app.run()
+
+
+if __name__ == '__main__':
+    main()
