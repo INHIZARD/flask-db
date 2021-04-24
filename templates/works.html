@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block works %}
+  <h2 align="center">Works log</h2>
+  {% for user in db_sess %}
+    <table align="center">
+      <caption>Action # {{ user.id }}</caption>
+      <tr>
+        <td>Title of activity</td>
+        <td>Team leader</td>
+        <td>Duration</td>
+        <td>List of collaborators</td>
+        <td>Is finished</td>
+      </tr>
+      <tr>
+        {% for item in user.jobs %}
+          <th>{{ item.job }}</th>
+          <th>{{ user.surname + ' ' + user.name }}</th>
+          <th>{{ item.work_size }} hours</th>
+          <th class="center">{{ item.collaborators }}</th>
+          <th>
+            {% if item.is_finished %}
+              is finished
+            {% else %}
+              is not finished
+            {% endif %}
+          </th>
+        {% endfor %}
+      </tr>
+    </table>
+  {% endfor %}
+{% endblock %}
