@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, render_template
 from data import db_session
 from data.users import User
 from data.jobs import Jobs
@@ -54,14 +54,48 @@ def main():
     jobs.start_date = datetime.datetime.now()
     jobs.is_finished = False
 
+    jobs1 = Jobs()
+    jobs1.team_leader = 2
+    jobs1.job = 'deployment of residential modules 3 and 4'
+    jobs1.work_size = 15
+    jobs1.collaborators = '2'
+    jobs1.start_date = datetime.datetime.now()
+    jobs1.is_finished = False
+
+    jobs2 = Jobs()
+    jobs2.team_leader = 3
+    jobs2.job = 'support'
+    jobs2.work_size = 5
+    jobs2.collaborators = '2'
+    jobs2.start_date = datetime.datetime.now()
+    jobs2.is_finished = True
+
+    jobs3 = Jobs()
+    jobs3.team_leader = 4
+    jobs3.job = 'support'
+    jobs3.work_size = 10
+    jobs3.collaborators = '3'
+    jobs3.start_date = datetime.datetime.now()
+    jobs3.is_finished = False
+
     db_sess = db_session.create_session()
     db_sess.add(user)
     db_sess.add(user1)
     db_sess.add(user2)
     db_sess.add(user3)
     db_sess.add(jobs)
+    db_sess.add(jobs1)
+    db_sess.add(jobs2)
+    db_sess.add(jobs3)
     db_sess.commit()
-    # app.run()
+    app.run()
+
+
+@app.route('/')
+def journal():
+    db_session.global_init('db/blogs.db')
+    db_sess = db_session.create_session()
+    return render_template('works.html', db_sess=db_sess.query(User).all())
 
 
 if __name__ == '__main__':
